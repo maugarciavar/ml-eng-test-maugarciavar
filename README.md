@@ -1,28 +1,12 @@
-# Machine Learning Engineer Test: Computer Vision and Object Detection
+# Wall Detection API
 
-## Objective
-This test aims to assess your skills in computer vision and object detection, with a specific focus on detecting room walls and identifying rooms in architectural blueprints or pre-construction plans.
+## Build the Docker Image. The . at the end is to indicate that the dockerfile is in the current directory where running the docker build command
+docker build -t wall-detector .
 
-This test evaluates your practical skills in applying advanced computer vision techniques to a specialized domain and your ability to integrate machine learning models into a simple API server for real-world applications.
+## Run this to run/activate the container and expose port 3000
+docker run -p 3000:3000 wall-detector
 
-Choose one of the visual tasks, one of the text extraction tasks, and the API Server task. We encourage you to submit your tests even if you can’t complete all tasks.
+## Example test, the input image must be .pdf as in the original dataset, avoid spaces in the filename. The output will be generated in image format png.
+curl -X POST -F "image=@A0.54-FOURTH-FLOOR-REFERENCE-PLAN-Rev.1.pdf" "http://localhost:3000/run-inference?type=wall" -o output.png
 
-Good luck!
-
-
-## Full test description
-[Senior Machine Learning Engineer.pdf](https://github.com/user-attachments/files/16702909/Senior.Machine.Learning.Engineer.pdf)
-
-
-## PS
-Share your project with the following GitHub users:
-- vhaine-tb
-- gabrielreis-tb
-
-## Example cURL
-```
-curl -X POST -F "image=@extracted_page_xyz.png" "http://localhost:3000/run-inference?type=wall"
-curl -X POST -F "image=@extracted_page_xyz.png" "http://localhost:3000/run-inference?type=room"
-curl -X POST -F "image=@extracted_page_xyz.png" "http://localhost:3000/run-inference?type=page_info"
-curl -X POST -F "image=@extracted_page_xyz.png" "http://localhost:3000/run-inference?type=tables"
-```
+## This project serves as a demonstration of API design, computer vision processing, and Docker containerization skills.The current approach uses traditional OpenCV-based image processing for wall detection. While it performs reasonably on clean blueprints, the results can be significantly improved by training and integrating a deep learning segmentation model (for example, U-Net or SegNEt) to learn wall features and better distinguish text and symbols. This could be achieved by using pytorch or ultralytics. 
